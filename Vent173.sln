@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30804.86
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vent173", "Vent173\Vent173.csproj", "{19914B17-E74E-444D-A278-1685C95800AF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{19914B17-E74E-444D-A278-1685C95800AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{19914B17-E74E-444D-A278-1685C95800AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{19914B17-E74E-444D-A278-1685C95800AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{19914B17-E74E-444D-A278-1685C95800AF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0113AA99-7B2A-457C-B10D-0AE80DF50D0A}
+	EndGlobalSection
+EndGlobal
