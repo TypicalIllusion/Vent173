@@ -7,7 +7,7 @@ using CustomPlayerEffects;
 
 using RemoteAdmin;
 
-using EAPF = Exiled.API.Features.Player;
+using EPlayer = Exiled.API.Features.Player;
 
 namespace Vent173.Handlers
 {
@@ -17,12 +17,12 @@ namespace Vent173.Handlers
 
         public string[] Aliases => Array.Empty<string>();
 
-        public string Description => "vent";
+        public string Description => "makes SCP-173 go invisible to escape people or outplay them";
 
         public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
         {
             PlayerCommandSender playerCommandSender = sender as PlayerCommandSender;
-            if (sender is PlayerCommandSender ply && EAPF.Get(ply.SenderId) is EAPF player1 && player1.Role == RoleType.Scp173)
+            if (sender is PlayerCommandSender ply && EPlayer.Get(ply.SenderId) is EPlayer player1 && player1.Role == RoleType.Scp173)
             {
                 foreach (var effect in player1.ReferenceHub.playerEffectsController.AllEffects.Values
                     .Where(x => x.GetType() == typeof(Scp268) || x.GetType() == typeof(Amnesia)))
