@@ -7,10 +7,13 @@ using CustomPlayerEffects;
 
 using RemoteAdmin;
 
+using MEC;
+
 using EPlayer = Exiled.API.Features.Player;
 
 namespace Vent173.Handlers
 {
+    [CommandHandler(typeof(ClientCommandHandler))]
     class Vent : ICommand
     {
         public string Command => "vent";
@@ -33,6 +36,10 @@ namespace Vent173.Handlers
                 player1.IsInvisible = !player1.IsInvisible;
                 player1.ShowHint($"You are {(player1.IsInvisible ? "Invisible" : "Visible")}");
                 response = $"You are {(player1.IsInvisible ? "Invisible" : "Visible")} now";
+                Timing.CallDelayed(15f, () =>
+                {
+                    player1.IsInvisible = false;
+                });
                 return true;
             }
             else

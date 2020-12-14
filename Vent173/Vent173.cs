@@ -10,7 +10,7 @@ namespace Vent173
     {
         public override string Name { get; } = "Vent173";
         public override string Author { get; } = "TypicalIllusion";
-        public override Version Version { get; } = new Version(1, 0, 0);
+        public override Version Version { get; } = new Version(1, 0, 1);
         public override Version RequiredExiledVersion { get; } = new Version(2, 1, 19);
         public override string Prefix { get; } = "Vent173";
 
@@ -21,10 +21,12 @@ namespace Vent173
         public void RegisterEvents()
         {
             PPlayer.Hurting += player.OnHurting;
+            PPlayer.InteractingDoor += player.OnInteract;
         }
         public void UnregisterEvents()
         {
             PPlayer.Hurting -= player.OnHurting;
+            PPlayer.InteractingDoor -= player.OnInteract;
         }
         public override void OnEnabled()
         {
