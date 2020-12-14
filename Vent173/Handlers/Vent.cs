@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Linq;
+
 using CommandSystem;
+
 using CustomPlayerEffects;
-using Exiled.API.Features;
+
 using RemoteAdmin;
+
+using EAPF = Exiled.API.Features.Player;
 
 namespace Vent173.Handlers
 {
@@ -18,7 +22,7 @@ namespace Vent173.Handlers
         public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
         {
             PlayerCommandSender playerCommandSender = sender as PlayerCommandSender;
-            if (sender is PlayerCommandSender ply && Player.Get(ply.SenderId) is Player player1 && player1.Role == RoleType.Scp173)
+            if (sender is PlayerCommandSender ply && EAPF.Get(ply.SenderId) is EAPF player1 && player1.Role == RoleType.Scp173)
             {
                 foreach (var effect in player1.ReferenceHub.playerEffectsController.AllEffects.Values
                     .Where(x => x.GetType() == typeof(Scp268) || x.GetType() == typeof(Amnesia)))
