@@ -8,5 +8,7 @@ namespace Vent173
     {
         [Description("Enable the plugin?")]
         public bool IsEnabled { get; set; } = true;
+        [Description("How long is the vent cooldown?")]
+        public int VentCooldown { get; set; } = 30;
     }
 }

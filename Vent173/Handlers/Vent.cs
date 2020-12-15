@@ -11,16 +11,21 @@ using MEC;
 
 using EPlayer = Exiled.API.Features.Player;
 
+using static Vent173.Vent173;
+
+using System.Collections.Generic;
+
 namespace Vent173.Handlers
 {
     [CommandHandler(typeof(ClientCommandHandler))]
     class Vent : ICommand
     {
+
         public string Command => "vent";
 
         public string[] Aliases => Array.Empty<string>();
 
-        public string Description => "makes SCP-173 go invisible to escape people or outplay them";
+        public string Description => "Makes SCP-173 go invisible to escape people or outplay them";
 
         public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
         {

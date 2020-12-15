@@ -18,18 +18,10 @@ namespace Vent173.Handlers
             {
                 if (!ev.Door.isOpen)
                 {
-                    if (Vector3.Distance(ev.Player.Rotation, ev.Door.localPos) >= 1.5f)
+                    if (Vector3.Distance(ev.Player.Position, ev.Door.localPos) >= 1.5f)
                     {
                         ev.IsAllowed = false;
-                        ev.Player.Rotation += Vector3.forward * 1.5f;
-                    }
-                    else
-                    {
-                        if (Vector3.Distance(ev.Player.Rotation, ev.Door.localPos) >= -1.5f)
-                        {
-                            ev.IsAllowed = false;
-                            ev.Player.Rotation += Vector3.forward * -1.5f;
-                        }
+                        ev.Player.Position += ev.Player.CameraTransform.forward;
                     }
                 }
             }
