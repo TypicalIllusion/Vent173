@@ -10,7 +10,7 @@ using RemoteAdmin;
 using MEC;
 
 using EPlayer = Exiled.API.Features.Player;
-
+using Exiled.API.Features;
 using static Vent173.Vent173;
 
 using System.Collections.Generic;
@@ -43,13 +43,17 @@ namespace Vent173.Handlers
                         else
                             effect.ServerDisable();
                     player1.IsInvisible = !player1.IsInvisible;
-                    player1.ShowHint($"You are {(player1.IsInvisible ? "Invisible" : "Visible")}");
+                    player1.Broadcast(7, $"You are {(player1.IsInvisible ? "Invisible" : "Visible")}");
                     response = $"You are {(player1.IsInvisible ? "Invisible" : "Visible")} now";
                     Timing.CallDelayed(15f, () =>
                     {
                         player1.IsInvisible = false;
                     });
-                    Timing.CallDelayed(1f, () =>
+                    foreach (EPlayer shitass in EPlayer.List)
+                    {
+                        if (shitass.Team != Team.SCP && shitass.IsAlive) Scp173.TurnedPlayers.Add(shitass);
+                    }
+                    Timing.CallDelayed(3f, () =>
                     {
                         Coroutine.Add(Timing.RunCoroutine(VentCooldown(Singleton.Config.VentCooldown, player1)));
                         CmdCooldown.Add(player1);
@@ -65,7 +69,7 @@ namespace Vent173.Handlers
             else
             {
                 response = "You are on cooldown!";
-                pplayer.ShowHint("You are on cooldown!");
+                pplayer.Broadcast(Singleton.Config.CBroadcast.Duration, Singleton.Config.CBroadcast.Content);
                 return false;
             }
         }
