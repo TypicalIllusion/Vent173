@@ -22,6 +22,8 @@ namespace Vent173
 
         public static Vent173 Singleton;
 
+        public static List<CoroutineHandle> Coroutine = new List<CoroutineHandle>();
+
         public void RegisterEvents()
         {
             PPlayer.Hurting += player.OnHurting;

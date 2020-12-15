@@ -20,6 +20,7 @@ namespace Vent173.Handlers
     [CommandHandler(typeof(ClientCommandHandler))]
     class Vent : ICommand
     {
+        public static List<EPlayer> CmdCooldown = new List<EPlayer>();
 
         public string Command => "vent";
 
@@ -30,28 +31,48 @@ namespace Vent173.Handlers
         public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
         {
             PlayerCommandSender playerCommandSender = sender as PlayerCommandSender;
-            if (sender is PlayerCommandSender ply && EPlayer.Get(ply.SenderId) is EPlayer player1 && player1.Role == RoleType.Scp173)
+            EPlayer pplayer = EPlayer.Get(((CommandSender)sender).SenderId);
+            if (!CmdCooldown.Contains(pplayer))
             {
-                foreach (var effect in player1.ReferenceHub.playerEffectsController.AllEffects.Values
-                    .Where(x => x.GetType() == typeof(Scp268) || x.GetType() == typeof(Amnesia)))
-                    if (!effect.Enabled)
-                        player1.ReferenceHub.playerEffectsController.EnableEffect(effect, 15f);
-                    else
-                        effect.ServerDisable();
-                player1.IsInvisible = !player1.IsInvisible;
-                player1.ShowHint($"You are {(player1.IsInvisible ? "Invisible" : "Visible")}");
-                response = $"You are {(player1.IsInvisible ? "Invisible" : "Visible")} now";
-                Timing.CallDelayed(15f, () =>
+                if (sender is PlayerCommandSender ply && EPlayer.Get(ply.SenderId) is EPlayer player1 && player1.Role == RoleType.Scp173)
                 {
-                    player1.IsInvisible = false;
-                });
-                return true;
+                    foreach (var effect in player1.ReferenceHub.playerEffectsController.AllEffects.Values
+                        .Where(x => x.GetType() == typeof(Scp268) || x.GetType() == typeof(Amnesia)))
+                        if (!effect.Enabled)
+                            player1.ReferenceHub.playerEffectsController.EnableEffect(effect, 15f);
+                        else
+                            effect.ServerDisable();
+                    player1.IsInvisible = !player1.IsInvisible;
+                    player1.ShowHint($"You are {(player1.IsInvisible ? "Invisible" : "Visible")}");
+                    response = $"You are {(player1.IsInvisible ? "Invisible" : "Visible")} now";
+                    Timing.CallDelayed(15f, () =>
+                    {
+                        player1.IsInvisible = false;
+                    });
+                    Timing.CallDelayed(1f, () =>
+                    {
+                        Coroutine.Add(Timing.RunCoroutine(VentCooldown(Singleton.Config.VentCooldown, player1)));
+                        CmdCooldown.Add(player1);
+                    });
+                    return true;
+                }
+                else
+                {
+                    response = "You are not SCP-173";
+                    return false;
+                }
             }
             else
             {
-                response = "You are not SCP-173";
+                response = "You are on cooldown!";
+                pplayer.ShowHint("You are on cooldown!");
                 return false;
             }
+        }
+        public static IEnumerator<float> VentCooldown(float duration, EPlayer player)
+        {
+            yield return Timing.WaitForSeconds(Singleton.Config.VentCooldown);
+            CmdCooldown.Remove(player);
         }
     }
 }
