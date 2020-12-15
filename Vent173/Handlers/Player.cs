@@ -25,10 +25,17 @@ namespace Vent173.Handlers
                 ev.Player.Position += ev.Player.CameraTransform.forward;
             }
         }
-            public void OnRoundEnded(RoundEndedEventArgs ev)
+        public void OnRoundEnded(RoundEndedEventArgs ev)
+        {
+            foreach (CoroutineHandle coroutine in Vent173.Coroutine)
+                Timing.KillCoroutines(coroutine);
+        }
+        public void OnSpawning(SpawningEventArgs ev)
+        {
+            if (ev.Player.Role == RoleType.Scp173)
             {
-                foreach (CoroutineHandle coroutine in Vent173.Coroutine)
-                    Timing.KillCoroutines(coroutine);
+                ev.Player.Broadcast(7, "You can vent by type `.vent` in the `~` console!\nYou have 5 seconds until you will be vent locked");
             }
+        }
     }
 }

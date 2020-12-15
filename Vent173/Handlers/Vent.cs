@@ -34,29 +34,32 @@ namespace Vent173.Handlers
             EPlayer pplayer = EPlayer.Get(((CommandSender)sender).SenderId);
             if (!CmdCooldown.Contains(pplayer))
             {
-                if (sender is PlayerCommandSender ply && EPlayer.Get(ply.SenderId) is EPlayer player1 && player1.Role == RoleType.Scp173)
+                if (sender is PlayerCommandSender ply && EPlayer.Get(ply.SenderId) is EPlayer pp && pp.Role == RoleType.Scp173)
                 {
-                    foreach (var effect in player1.ReferenceHub.playerEffectsController.AllEffects.Values
+                    foreach (var effect in pp.ReferenceHub.playerEffectsController.AllEffects.Values
                         .Where(x => x.GetType() == typeof(Scp268) || x.GetType() == typeof(Amnesia)))
                         if (!effect.Enabled)
-                            player1.ReferenceHub.playerEffectsController.EnableEffect(effect, 15f);
+                            pp.ReferenceHub.playerEffectsController.EnableEffect(effect, 15f);
                         else
                             effect.ServerDisable();
-                    player1.IsInvisible = !player1.IsInvisible;
-                    player1.Broadcast(7, $"You are {(player1.IsInvisible ? "Invisible" : "Visible")}");
-                    response = $"You are {(player1.IsInvisible ? "Invisible" : "Visible")} now";
-                    Timing.CallDelayed(15f, () =>
+                    pp.IsInvisible = !pp.IsInvisible;
+                    pp.Broadcast(5, $"You are {(pp.IsInvisible ? "Invisible" : "Visible")}");
+                    response = $"You are {(pp.IsInvisible ? "Invisible" : "Visible")} now";
+                    if (pp.IsInvisible)
                     {
-                        player1.IsInvisible = false;
-                    });
+                        Timing.CallDelayed(15f, () =>
+                        {
+                            pp.IsInvisible = false;
+                        });
+                    }
                     foreach (EPlayer shitass in EPlayer.List)
                     {
                         if (shitass.Team != Team.SCP && shitass.IsAlive) Scp173.TurnedPlayers.Add(shitass);
                     }
-                    Timing.CallDelayed(3f, () =>
+                    Timing.CallDelayed(5f, () =>
                     {
-                        Coroutine.Add(Timing.RunCoroutine(VentCooldown(Singleton.Config.VentCooldown, player1)));
-                        CmdCooldown.Add(player1);
+                        Coroutine.Add(Timing.RunCoroutine(VentCooldown(Singleton.Config.VentCooldown, pp)));
+                        CmdCooldown.Add(pp);
                     });
                     return true;
                 }
