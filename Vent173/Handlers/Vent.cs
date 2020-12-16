@@ -43,7 +43,7 @@ namespace Vent173.Handlers
                         else
                             effect.ServerDisable();
                     pp.IsInvisible = !pp.IsInvisible;
-                    pp.Broadcast(5, $"You are {(pp.IsInvisible ? "Invisible" : "Visible")}");
+                    pp.Broadcast(5, $"You are now {(pp.IsInvisible ? "invisible" : "visible")}!");
                     response = $"You are {(pp.IsInvisible ? "Invisible" : "Visible")} now";
                     if (pp.IsInvisible)
                     {
@@ -55,6 +55,10 @@ namespace Vent173.Handlers
                     foreach (EPlayer shitass in EPlayer.List)
                     {
                         if (shitass.Team != Team.SCP && shitass.IsAlive) Scp173.TurnedPlayers.Add(shitass);
+                        Timing.CallDelayed(15f, () =>
+                        {
+                            Scp173.TurnedPlayers.Remove(shitass);
+                        });
                     }
                     Timing.CallDelayed(5f, () =>
                     {
