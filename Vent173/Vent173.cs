@@ -41,6 +41,7 @@ namespace Vent173
             PServer.RoundEnded -= server.OnRoundEnded;
             Singleton = null;
             player = null;
+            server = null;
         }
         public override void OnEnabled()
         {
