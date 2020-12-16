@@ -1,5 +1,5 @@
 ﻿using Exiled.Events.EventArgs;
-using MEC;
+
 using UnityEngine;
 
 namespace Vent173.Handlers
@@ -24,11 +24,6 @@ namespace Vent173.Handlers
                 ev.IsAllowed = false;
                 ev.Player.Position += ev.Player.CameraTransform.forward * 2.5f;
             }
-        }
-        public void OnRoundEnded(RoundEndedEventArgs ev)
-        {
-            foreach (CoroutineHandle coroutine in Vent173.Coroutine)
-                Timing.KillCoroutines(coroutine);
         }
         public void OnSpawning(SpawningEventArgs ev)
         {

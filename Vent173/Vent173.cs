@@ -3,6 +3,7 @@
 using Exiled.API.Features;
 using Exiled.API.Enums;
 using PPlayer = Exiled.Events.Handlers.Player;
+using PServer = Exiled.Events.Handlers.Server;
 using System.Collections.Generic;
 using MEC;
 
@@ -17,6 +18,7 @@ namespace Vent173
         public override string Prefix { get; } = "Vent173";
 
         private Handlers.Player player = new Handlers.Player();
+        private Handlers.Server server = new Handlers.Server();
         public override PluginPriority Priority { get; } = PluginPriority.Low;
 
         public static Vent173 Singleton;
@@ -28,6 +30,7 @@ namespace Vent173
             PPlayer.Hurting += player.OnHurting;
             PPlayer.InteractingDoor += player.OnInteract;
             PPlayer.Spawning += player.OnSpawning;
+            PServer.RoundEnded += server.OnRoundEnded;
             Singleton = this;
         }
         public void UnregisterEvents()
@@ -35,6 +38,7 @@ namespace Vent173
             PPlayer.Hurting -= player.OnHurting;
             PPlayer.InteractingDoor -= player.OnInteract;
             PPlayer.Spawning -= player.OnSpawning;
+            PServer.RoundEnded -= server.OnRoundEnded;
             Singleton = null;
             player = null;
         }
