@@ -14,5 +14,7 @@ namespace Vent173
         public float VentCooldown { get; set; } = 30;
         [Description("What is the cooldown broadcast?")]
         public BBroadcast CBroadcast { get; set; } = new BBroadcast($"You are on cooldown!", 1);
+        [Description("What is the vent cooldown at the start?")]
+        public float VentCooldownStart { get; set; } = 45f;
     }
 }

@@ -28,6 +28,11 @@ namespace Vent173.Handlers
 
         public string Description => "Makes SCP-173 go invisible to escape people or outplay them";
 
+        public static IEnumerator<float> VentCooldownStart(float duration, EPlayer pp)
+        {
+            pp.Broadcast(2, "You are preparing your abilities");
+            yield return Timing.WaitForSeconds(Singleton.Config.VentCooldownStart);
+        }
         public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
         {
             PlayerCommandSender playerCommandSender = sender as PlayerCommandSender;
@@ -54,17 +59,13 @@ namespace Vent173.Handlers
                     }
                     foreach (EPlayer shitass in EPlayer.List)
                     {
-                        if (shitass.Team != Team.SCP && shitass.IsAlive) Scp173.TurnedPlayers.Add(shitass);
-                        Timing.CallDelayed(15f, () =>
+                        if (shitass.ReferenceHub.playerEffectsController.GetEffect<Amnesia>().Enabled && pp.Role == RoleType.Scp173)
                         {
-                            Scp173.TurnedPlayers.Remove(shitass);
-                        });
+                            Scp173.TurnedPlayers.Add(shitass);
+                        }
                     }
-                    Timing.CallDelayed(5f, () =>
-                    {
-                        Coroutine.Add(Timing.RunCoroutine(VentCooldown(Singleton.Config.VentCooldown, pp)));
-                        CmdCooldown.Add(pp);
-                    });
+                    Coroutine.Add(Timing.RunCoroutine(VentCooldown(Singleton.Config.VentCooldown, pp)));
+                    CmdCooldown.Add(pp);
                     return true;
                 }
                 else
@@ -80,10 +81,11 @@ namespace Vent173.Handlers
                 return false;
             }
         }
-        public static IEnumerator<float> VentCooldown(float duration, EPlayer player)
+        public static IEnumerator<float> VentCooldown(float duration, EPlayer pp)
         {
+            yield return Timing.WaitUntilTrue(() => !pp.ReferenceHub.playerEffectsController.GetEffect<Amnesia>().Enabled);
             yield return Timing.WaitForSeconds(Singleton.Config.VentCooldown);
-            CmdCooldown.Remove(player);
+            CmdCooldown.Remove(pp);
         }
     }
 }

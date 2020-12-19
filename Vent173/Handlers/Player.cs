@@ -22,7 +22,7 @@ namespace Vent173.Handlers
             if (Vector3.Distance(ev.Player.Position, ev.Door.localPos) >= 1.5f)
             {
                 ev.IsAllowed = false;
-                ev.Player.Position += ev.Player.CameraTransform.forward * 2.5f;
+                ev.Player.Position += ev.Player.GameObject.transform.forward * 3.5f;
             }
         }
         public void OnSpawning(SpawningEventArgs ev)
