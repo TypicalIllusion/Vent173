@@ -31,6 +31,7 @@ namespace Vent173
             PPlayer.InteractingDoor += player.OnInteract;
             PPlayer.Spawning += player.OnSpawning;
             PServer.RoundEnded += server.OnRoundEnded;
+            PServer.RoundStarted += server.OnRoundStarted;
             Singleton = this;
         }
         public void UnregisterEvents()
@@ -39,6 +40,7 @@ namespace Vent173
             PPlayer.InteractingDoor -= player.OnInteract;
             PPlayer.Spawning -= player.OnSpawning;
             PServer.RoundEnded -= server.OnRoundEnded;
+            PServer.RoundStarted -= server.OnRoundStarted;
             Singleton = null;
             player = null;
             server = null;

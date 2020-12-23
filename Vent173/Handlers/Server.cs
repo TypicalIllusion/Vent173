@@ -7,9 +7,15 @@ namespace Vent173.Handlers
 {
     class Server
     {
-        public void OnRoundStart(float duration, EPlayer pp)
+        public void OnRoundStarted()
         {
-            Timing.RunCoroutine(Vent.VentCooldownStart(Singleton.Config.VentCooldownStart, pp));
+            foreach (EPlayer ply in EPlayer.List)
+            {
+                Timing.CallDelayed(0.1f, () =>
+                {
+                    Timing.RunCoroutine(Vent.VentCooldown(Singleton.Config.VentCooldown, ply));
+                });
+            }
         }
         public void OnRoundEnded(RoundEndedEventArgs ev)
         {
