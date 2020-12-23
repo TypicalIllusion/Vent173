@@ -14,7 +14,7 @@ namespace Vent173
         public override string Name { get; } = "Vent173";
         public override string Author { get; } = "TypicalIllusion";
         public override Version Version { get; } = new Version(1, 0, 0);
-        public override Version RequiredExiledVersion { get; } = new Version(2, 1, 19);
+        public override Version RequiredExiledVersion { get; } = new Version(2, 1, 21);
         public override string Prefix { get; } = "Vent173";
 
         private Handlers.Player player = new Handlers.Player();
