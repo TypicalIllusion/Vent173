@@ -19,7 +19,7 @@ namespace Vent173.Handlers
             if (ev.Player.Role != RoleType.Scp173 || !ev.Player.IsInvisible)
                 return;
 
-            if (Vector3.Distance(ev.Player.Position, ev.Door.localPos) >= 1.5f)
+            if (Vector3.Distance(ev.Player.Position, ev.Door.gameObject.transform.localPosition) >= 1.5f)
             {
                 ev.IsAllowed = false;
                 ev.Player.Position += ev.Player.GameObject.transform.forward * 3.5f;
